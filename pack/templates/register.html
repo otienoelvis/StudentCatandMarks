@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title">Edit Profile</h4>
+                        <p class="card-category">Complete your profile</p>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="">
+                            {{ form.hidden_tag() }}
+                            <div class="row">
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {{ form.full_name.label(class="bmd-label-floating" ) }}
+                                        {{ form.full_name(class="form-control", type="text") }}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        {{ form.registration_number.label(class="bmd-label-floating" ) }}
+                                        {{ form.registration_number(class="form-control", type="text") }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ form.phone_number.label(class="bmd-label-floating" ) }}
+                                        {{ form.phone_number(class="form-control", type="text") }}
+                                    </div>
+                                </div>
+                            </div>
+                            <!--button type="submit" >Update Profile</button-->
+                            {{ form.submit(class="btn btn-primary ") }}
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
