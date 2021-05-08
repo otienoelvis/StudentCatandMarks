@@ -13,7 +13,7 @@ def layout():
 @app.route("/", methods=['GET', 'POST'])
 @app.route("/home", methods=['GET', 'POST'])
 def home():
-    return render_template("home.html")
+    return render_template("home.html", title='Home')
 
 
 @app.route("/user", methods=['GET', 'POST'])
@@ -26,7 +26,7 @@ def table_list():
     return render_template("tables.html")
 
 
-# noinspection PyUnresolvedReferences
+# noinspection PyUnresolvedReferences,PyArgumentList
 @app.route("/admin_register", methods=['GET', 'POST'])
 def register():
     form = AdminForm()
@@ -38,9 +38,9 @@ def register():
                       password=hashed_password)
         db.session.add(admin)
         db.session.commit()
-        flash("Account Created")
+        flash("Account Created successfully.Please login to continue.")
         return redirect(url_for('login'))
-    return render_template("register.html", form=form)
+    return render_template("register.html", form=form, title='Admin Signup')
 
 
 @app.route("/adminlogin", methods=['GET', 'POST'])
@@ -54,10 +54,11 @@ def login():
         if admin and bcrypt.check_password_hash(admin.password, form.password.data):
             login_user(admin)
             # next_page = request.args.get('next')
+            flash('Login Success', 'danger')
             return redirect(url_for('home'))
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
-    return render_template('login.html', title='Login', form=form)
+    return render_template('login.html', title='Admin Login', form=form)
 
 """
     full_name = StringField('Full Name', validators=[DataRequired()])
