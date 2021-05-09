@@ -20,6 +20,12 @@
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/material-dashboard.css') }}">
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href= "{{ url_for('static',filename='demo/demo.css') }}"/>
+
+    <!--     header for uploading marks form     -->
+     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
 </head>
 
 <body class="dark-edition">
@@ -46,7 +52,7 @@
                     </li-->
 
                     <li class="nav-item ">
-                        <a class="nav-link" href="{{ url_for('table_list') }}">
+                        <a class="nav-link" href="{{ url_for('upload_csv') }}">
                             <i class="material-icons">content_paste</i>
                             <p>Table List</p>
                         </a>
@@ -99,17 +105,7 @@
                     <span class="navbar-toggler-icon icon-bar"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end">
-                    {% if current_user.is_authenticated %}
-                        <form class="navbar-form">
-                            <div class="input-group no-border">
-                                <input type="text" value="" class="form-control" placeholder="Search...">
-                                <button type="submit" class="btn btn-default btn-round btn-just-icon">
-                                    <i class="material-icons">search</i>
-                                    <div class="ripple-container"></div>
-                                </button>
-                            </div>
-                        </form>
-                    {% endif %}
+
                     <ul class="navbar-nav">
                         {% if current_user.is_authenticated %}
                             <li class="nav-item">
@@ -245,7 +241,7 @@
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!--  Google Maps Plugin    -->
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+<!--script-- src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script-->
 <!-- Chartist JS -->
 <script src="/static/js/plugins/chartist.min.js"></script>
 <!--  Notifications Plugin    -->

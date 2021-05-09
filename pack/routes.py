@@ -1,18 +1,14 @@
+"""
+routes
+"""
 from flask import render_template, redirect, url_for, flash, redirect, request, abort, Blueprint
 from pack import app, db, bcrypt
-from pack.forms import StudentForm, AdminForm, LoginForm, UpdateProfileForm
-from pack.models import Admin, Student
+from pack.forms import StudentForm, AdminForm, LoginForm, UpdateProfileForm, UploadForm
+from pack.models import Admin, Unit
 from flask_login import login_user, current_user, logout_user, login_required
 
-
-@app.route("/layout", methods=['GET', 'POST'])
-def layout():
-    return render_template("layout.html")
-
-
-@app.route("/tables", methods=['GET', 'POST'])
-def table_list():
-    return render_template("tables.html")
+from io import TextIOWrapper
+import csv
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -117,6 +113,37 @@ def account():
     return render_template('profile.html', title='User Profile', navbar_title='My Profile', form=form)
 
 
+@app.route('/upload', methods=['GET', 'POST'])
+@login_required
+def upload_csv():
+    """
+    uploads csv and saves to db
+    """
+    form = UploadForm()
+    if request.method == 'POST':
+        csv_file = request.files['file']
+        csv_file = TextIOWrapper(csv_file, encoding='utf-8')
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        for row in csv_reader:
+            # noinspection PyUnboundLocalVariable
+            marks = Unit(unit_code=row[0],
+                         unit_name=row[1],
+                         student_name=row[2],
+                         student_id=row[3],
+                         cat_1=row[4],
+                         cat_2=row[5],
+                         cat_3=row[6],
+                         main_exam=row[7])
+            db.session.add(marks)
+            db.session.commit()
+            flash('Your account has been updated!')
+        return redirect(url_for('upload_csv'))
+    return """
+            <form method='post' action='' enctype='multipart/form-data'>
+              Upload a csv file: <input type='file' name='file'>
+              <input type='submit' value='Upload'>
+            </form>
+           """
 
 
 """

@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,BooleanField, SubmitField, PasswordField
+from wtforms import StringField,BooleanField, SubmitField, PasswordField, IntegerField
 from wtforms.validators import DataRequired, EqualTo, Email, ValidationError
-from pack.models import Admin, Student
+from pack.models import Admin
 from flask import flash
 from flask_login import current_user
 
@@ -69,3 +69,15 @@ class UpdateProfileForm(FlaskForm):
                 flash('That Email is taken.')
                 raise ValidationError('That Email is taken.\nReset your password or use another email.')
 
+
+class UploadForm(FlaskForm):
+    unit_id = StringField('Unit ID', validators=[DataRequired()])
+    unit_code = StringField('Unit Code', validators=[DataRequired()])
+    unit_name = StringField('Unit Name', validators=[DataRequired()])
+    student_name = StringField('Student Name', validators=[DataRequired()])
+    student_id = StringField('Student Adm', validators=[DataRequired()])
+    cat_1 = IntegerField('Cat 1', validators=[DataRequired()])
+    cat_2 = IntegerField('Cat 2', validators=[DataRequired()])
+    cat_3 = IntegerField('Cat 3', validators=[DataRequired()])
+    main_exam = IntegerField('Cat 4', validators=[DataRequired()])
+    submit = SubmitField('Submit')

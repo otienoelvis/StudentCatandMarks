@@ -15,17 +15,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         {{ form.email.label(class="bmd-label-floating" ) }}
-
-                                        {% if form.email.errors %}
-                                            {{ form.email(class="form-control", type="text") }}
-                                            <div class="invalid-feedback">
-                                                {% for error in form.email.errors %}
-                                                    <span>{{ error }}</span>
-                                                {% endfor %}
-                                            </div>
-                                        {% else %}
-                                            {{ form.email(class="form-control", type="text") }}
-                                        {% endif %}
+                                        {{ form.email(class="form-control", type="text") }}
                                     </div>
                                 </div>
                             </div>
