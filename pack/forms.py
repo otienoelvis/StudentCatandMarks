@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,BooleanField, SubmitField, PasswordField, IntegerField
+from wtforms import StringField,BooleanField, SubmitField, PasswordField, IntegerField, FileField
 from wtforms.validators import DataRequired, EqualTo, Email, ValidationError
 from pack.models import Admin
 from flask import flash
@@ -80,4 +80,11 @@ class UploadForm(FlaskForm):
     cat_2 = IntegerField('Cat 2', validators=[DataRequired()])
     cat_3 = IntegerField('Cat 3', validators=[DataRequired()])
     main_exam = IntegerField('Cat 4', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+
+class UploadCsvForm(FlaskForm):
+    csv_file = FileField('Choose file', validators=[DataRequired()])
+    unit_code = StringField('Unit Code', validators=[DataRequired()])
+    unit_name = StringField('Unit Name', validators=[DataRequired()])
     submit = SubmitField('Submit')

@@ -7,6 +7,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['SECRET_KEY'] = 'secret'
+app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024 * 1024
 db = SQLAlchemy(app)
 bcrypt = Bcrypt()
 login_manager = LoginManager(app)

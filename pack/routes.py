@@ -1,9 +1,9 @@
 """
 routes
 """
-from flask import render_template, redirect, url_for, flash, redirect, request, abort, Blueprint
+from flask import render_template, redirect, url_for, flash, redirect, request, abort, Blueprint, send_file
 from pack import app, db, bcrypt
-from pack.forms import StudentForm, AdminForm, LoginForm, UpdateProfileForm, UploadForm
+from pack.forms import StudentForm, AdminForm, LoginForm, UpdateProfileForm, UploadCsvForm
 from pack.models import Admin, Unit
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -119,31 +119,42 @@ def upload_csv():
     """
     uploads csv and saves to db
     """
-    form = UploadForm()
+    form = UploadCsvForm()
+    fieldnames = ['Unit Code', 'Unit Name', 'Student Name', 'Admission Number', 'Cat 1', 'Cat 2', 'Cat 3', 'Main Exam']
+
     if request.method == 'POST':
-        csv_file = request.files['file']
-        csv_file = TextIOWrapper(csv_file, encoding='utf-8')
-        csv_reader = csv.reader(csv_file, delimiter=',')
-        for row in csv_reader:
-            # noinspection PyUnboundLocalVariable
-            marks = Unit(unit_code=row[0],
-                         unit_name=row[1],
-                         student_name=row[2],
-                         student_id=row[3],
-                         cat_1=row[4],
-                         cat_2=row[5],
-                         cat_3=row[6],
-                         main_exam=row[7])
-            db.session.add(marks)
-            db.session.commit()
+        csv_file = request.files.getlist('file')
+        for file in csv_file:
+            file = TextIOWrapper(file, encoding='utf-8')
+            csv_reader = csv.reader(file, delimiter=',')
+            next(csv_reader)
+            for row in csv_reader:
+                # noinspection PyUnboundLocalVariable
+                marks = Unit(unit_code=request.form.get('unit_code'),
+                             unit_name=request.form.get('unit_name'),
+                             student_name=row[0],
+                             admission_number=row[1],
+                             cat_1=row[2],
+                             cat_2=row[3],
+                             cat_3=row[4],
+                             main_exam=row[5])
+                db.session.add(marks)
+                db.session.commit()
             flash('Your account has been updated!')
         return redirect(url_for('upload_csv'))
-    return """
-            <form method='post' action='' enctype='multipart/form-data'>
-              Upload a csv file: <input type='file' name='file'>
-              <input type='submit' value='Upload'>
-            </form>
-           """
+    return render_template('upload3.html', form=form)
+
+
+@app.route('/download')
+@login_required
+def downloadfile():
+    """
+    download csv template
+    :return:
+    """
+    path = 'D:\MyProjects\Student\pack\static\csv_template\example.csv'
+    return send_file(path, as_attachment=True)
+
 
 
 """

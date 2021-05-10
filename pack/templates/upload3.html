@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title">Login</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="card-category">Upload only .csv file</p>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="pull-right " href="{{ url_for('downloadfile') }}">Download .csv template here</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="" enctype='multipart/form-data'>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form.hidden_tag() }}
+                                    <div id="example3">
+                                        <input type="file" name="file"/>
+                                        <div id="list" class="hide panel panel-default">
+                                            <div class="panel-body mt-2">List of files</div>
+                                            <div class="panel-footer"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-check-label" for="unit_code">Unit Code</label>
+                                        <input class="form-control" type="text" name="unit_code">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-check-label" for="unit_name">Unit Name</label>
+                                        <input class="form-control" type="text" name="unit_name">
+                                    </div>
+                                </div>
+                            </div>
+                            {{ form.submit(class="btn btn-primary pull-right") }}
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function init() {
+
+            $('#example1 input:file').betterInputFile();
+
+            $('#example2 input:file').betterInputFile({
+                btnText: "Browse files"
+            });
+
+
+            $('#example3 input:file').betterInputFile({
+                btnText: 'Select multiple files',
+                placeholder: 'No files selected',
+                multiple: true,
+                afterSelect: function (filelist) {
+                    if (filelist.length < 1) {
+                        $('#list .panel-footer').html('');
+                        $('#list').addClass('hide');
+                        return;
+                    }
+
+                    $('#list').removeClass('hide');
+                    var output = '';
+                    $.each(filelist, function (key, file) {
+                        output += '<li>' + file.name + '</li>';
+                    });
+                    output = '<ul class="filelist">' + output + '</li>';
+                    $('#list .panel-footer').html(output);
+                }
+            });
+
+            $('#example4 input:file').betterInputFile({
+                btnLeft: false
+            });
+
+        }
+
+        init();
+    </script>
+{% endblock content %}
