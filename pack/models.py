@@ -31,8 +31,9 @@ class Unit(db.Model):
     admission_number = db.Column(db.Integer, nullable=False)
     cat_1 = db.Column(db.Integer, nullable=False, default=0)
     cat_2 = db.Column(db.Integer, nullable=False, default=0)
-    cat_3 = db.Column(db.Integer, nullable=False, default=0)
     main_exam = db.Column(db.Integer, nullable=False, default=0)
+
+    date_added = db.Column(db.DateTime, default=datetime.now(pytz.timezone('Africa/Nairobi')))
 
     def __repr__(self):
         return f"Unit('{self.unit_code}', '{self.unit_name}', '{self.cat_1}', '{self.cat_2}', '{self.cat_3}', '{self.main_exam}')"

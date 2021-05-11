@@ -1,5 +1,5 @@
 from pack import app, db
-from pack.models import Student, Unit, Admin
+from pack.models import Unit, Admin
 
 
 with app.app_context():

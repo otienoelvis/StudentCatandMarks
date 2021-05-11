@@ -1,14 +1,42 @@
 """
 routes
 """
-from flask import render_template, redirect, url_for, flash, redirect, request, abort, Blueprint, send_file
+from flask import render_template, jsonify, redirect, url_for, flash, redirect, request, abort, Blueprint, send_file
 from pack import app, db, bcrypt
 from pack.forms import StudentForm, AdminForm, LoginForm, UpdateProfileForm, UploadCsvForm
 from pack.models import Admin, Unit
 from flask_login import login_user, current_user, logout_user, login_required
-
+import json
 from io import TextIOWrapper
 import csv
+
+
+def serializer(field):
+    """
+    serializer
+    :param field:
+    :return:
+    """
+    return {
+        "unit_code": field.unit_code,
+        "unit_name": field.unit_name,
+        "student_name": field.student_name,
+        "admission_number": field.admission_number,
+        "cat_1": field.cat_1,
+        "cat_2": field.cat_2,
+        "main_exam": field.main_exam
+    }
+
+
+@app.route("/homes", methods=['GET', 'POST'])
+@login_required
+def homes():
+    """
+    renders home page
+    :return:
+    """
+    data = jsonify([*map(serializer, Unit.query.all())])
+    return data
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -19,7 +47,9 @@ def home():
     renders home page
     :return:
     """
-    return render_template("home.html", title='Home', navbar_title='Dashboard')
+    page = request.args.get('page', 1, type=int)
+    posts = Unit.query.order_by(Unit.date_added.desc()).paginate(page=page, per_page=20)
+    return render_template("home.html", title='Home', navbar_title='Dashboard', posts=posts)
 
 
 # noinspection PyUnresolvedReferences,PyArgumentList
@@ -136,11 +166,10 @@ def upload_csv():
                              admission_number=row[1],
                              cat_1=row[2],
                              cat_2=row[3],
-                             cat_3=row[4],
-                             main_exam=row[5])
+                             main_exam=row[4])
                 db.session.add(marks)
                 db.session.commit()
-            flash('Your account has been updated!')
+        flash('File has been submited successfully')
         return redirect(url_for('upload_csv'))
     return render_template('upload3.html', form=form)
 
@@ -156,6 +185,14 @@ def downloadfile():
     return send_file(path, as_attachment=True)
 
 
+@app.route("/table", methods=['GET', 'POST'])
+@login_required
+def table():
+    """
+    renders home page
+    :return:
+    """
+    return render_template("table.html", title='Home', navbar_title='Dashboard')
 
 """
     full_name = StringField('Full Name', validators=[DataRequired()])
