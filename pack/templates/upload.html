@@ -1,97 +1,79 @@
 {% extends "layout.html" %}
 {% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card" style="width: 10000px">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title">Add Content</h4>
+                    <p class="card-category">Fill in your info</p>
+                </div>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header card-header-primary">
-                        <h4 class="card-title">Login</h4>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p class="card-category">Upload only .csv file</p>
-                            </div>
-                            <div class="col-md-6">
-                                <a class="card-category" href="{{ url_for('downloadfile') }}">Download .csv template here
-                                <i class="material-icons ml-3 mb-3">download_for_offline</i>
-                                </a>
+                <div class="card-body">
+                    <form role="form" method="post" action="">
+                        {{ form.hidden_tag() }}
+                        <div class="list_wrapper">
+                            <div class="row">
+
+                                <div class="col-xs-4 col-sm-4 col-md-4">
+                                    <div class="form-group">
+                                        Item Name
+                                        <input name="list[0][]" type="text" placeholder="Type Item Name" class="form-control"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-4 col-sm-4 col-md-4">
+                                    <div class="form-group">
+                                        Item Name
+                                        <input name="list[0][]" type="text" placeholder="Type Item Name" class="form-control"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-7 col-sm-7 col-md-7">
+                                    <div class="form-group">
+                                        Quantity
+                                        <input autocomplete="off" name="list[0][]" type="text" placeholder="Type Item Quantity" class="form-control"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-1 col-sm-1 col-md-1">
+                                    <br>
+                                    <button class="btn btn-primary list_add_button" type="button">+</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <form method="POST" action="" enctype='multipart/form-data'>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    {{ form.hidden_tag() }}
-                                    <div id="example3">
-                                        <input type="file" name="file"/>
-                                        <div id="list" class="hide panel panel-default">
-                                            <div class="panel-body mt-2">List of files</div>
-                                            <div class="panel-footer"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-4">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="bmd-label-floating" for="unit_code">Unit Code</label>
-                                        <input class="form-control" type="text" name="unit_code">
-                                    </div>
-                                </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="bmd-label-floating" for="unit_name">Unit Name</label>
-                                        <input class="form-control" type="text" name="unit_name">
-                                    </div>
-                                </div>
-                            </div>
-                            {{ form.submit(class="btn btn-primary pull-right") }}
-
-                        </form>
-                    </div>
+                        <input type="submit" value="Submit" class="btn btn-primary">
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        function init() {
+</div>
+<script>
+    $(document).ready(function()
 
-            $('#example1 input:file').betterInputFile();
+    {
+        var x = 0; //Initial field counter
+        var list_maxField = 10; //Input fields increment limitation
 
-            $('#example2 input:file').betterInputFile({
-                btnText: "Browse files"
-            });
+        //Once add button is clicked
+        $('.list_add_button').click(function()
+        {
+            //Check maximum number of input fields
+            if(x < list_maxField){
+                x++; //Increment field counter
+                var list_fieldHTML = '<div class="col-xs-4 col-sm-4 col-md-4"><div class="form-group"><input name="list[\'+x+\'][]" type="text" placeholder="Type Item Name" class="form-control"/></div></div><div class="row"><div class="col-xs-4 col-sm-4 col-md-4"><div class="form-group"><input name="list['+x+'][]" type="text" placeholder="Type Item Name" class="form-control"/></div></div><div class="col-xs-7 col-sm-7 col-md-7"><div class="form-group"><input name="list['+x+'][]" type="text" placeholder="Type Item Quantity" class="form-control"/></div></div><div class="col-xs-1 col-sm-7 col-md-1"><a href="javascript:void(0);" class="list_remove_button btn btn-danger">-</a></div></div>'; //New input field html
+                $('.list_wrapper').append(list_fieldHTML); //Add field html
+            }
+        });
 
-
-            $('#example3 input:file').betterInputFile({
-                btnText: 'Select multiple files',
-                placeholder: 'No files selected',
-                multiple: true,
-                afterSelect: function (filelist) {
-                    if (filelist.length < 1) {
-                        $('#list .panel-footer').html('');
-                        $('#list').addClass('hide');
-                        return;
-                    }
-
-                    $('#list').removeClass('hide');
-                    var output = '';
-                    $.each(filelist, function (key, file) {
-                        output += '<li>' + file.name + '</li>';
-                    });
-                    output = '<ul class="filelist">' + output + '</li>';
-                    $('#list .panel-footer').html(output);
-                }
-            });
-
-            $('#example4 input:file').betterInputFile({
-                btnLeft: false
-            });
-
-        }
-
-        init();
-    </script>
+        //Once remove button is clicked
+        $('.list_wrapper').on('click', '.list_remove_button', function()
+        {
+            $(this).closest('div.row').remove(); //Remove field html
+            x--; //Decrement field counter
+        });
+    });
+</script>
 {% endblock content %}
