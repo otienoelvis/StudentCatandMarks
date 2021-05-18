@@ -19,6 +19,7 @@ class Admin(db.Model, UserMixin):
     def __repr__(self):
         return f"Admin('{self.full_name}', '{self.registration_number}', '{self.email}')"
 
+
     def get_id(self):
         return self.admin_id
 
@@ -29,9 +30,11 @@ class Unit(db.Model):
     unit_name = db.Column(db.String(50), nullable=False)
     student_name = db.Column(db.String(50), nullable=False)
     admission_number = db.Column(db.Integer, nullable=False)
-    cat_1 = db.Column(db.Integer, nullable=False, default=0)
-    cat_2 = db.Column(db.Integer, nullable=False, default=0)
-    main_exam = db.Column(db.Integer, nullable=False, default=0)
+    cat_1 = db.Column(db.Float, nullable=False, default=0)
+    cat_2 = db.Column(db.Float, nullable=False, default=0)
+    main_exam = db.Column(db.Float, nullable=False, default=0)
+    total = db.Column(db.Float, nullable=False, default=0)
+    grade = db.Column(db.String, nullable=False, default='not graded')
 
     date_added = db.Column(db.DateTime, default=datetime.now(pytz.timezone('Africa/Nairobi')))
 

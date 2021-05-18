@@ -47,8 +47,9 @@ def home():
     renders home page
     :return:
     """
-    page = request.args.get('page', 1, type=int)
-    posts = Unit.query.order_by(Unit.date_added.desc()).paginate(page=page, per_page=20)
+    # page = request.args.get('page', 1, type=int)
+    # posts = Unit.query.order_by(Unit.date_added.desc()).paginate(page=page, per_page=20)
+    posts = Unit.query.all()
     return render_template("home.html", title='Home', navbar_title='Dashboard', posts=posts)
 
 
@@ -118,7 +119,7 @@ def profile():
         current_user.full_name = form.full_name.data
         current_user.email = form.email.data
         db.session.commit()
-        flash('Your account has been updated!')
+        flash('Your profile has been updated!')
         return redirect(url_for('profile'))
     elif request.method == 'GET':
         form.full_name.data = current_user.full_name
@@ -150,7 +151,6 @@ def upload_csv():
     uploads csv and saves to db
     """
     form = UploadCsvForm()
-    fieldnames = ['Unit Code', 'Unit Name', 'Student Name', 'Admission Number', 'Cat 1', 'Cat 2', 'Cat 3', 'Main Exam']
 
     if request.method == 'POST':
         csv_file = request.files.getlist('file')
@@ -160,18 +160,42 @@ def upload_csv():
             next(csv_reader)
             for row in csv_reader:
                 # noinspection PyUnboundLocalVariable
-                marks = Unit(unit_code=request.form.get('unit_code'),
-                             unit_name=request.form.get('unit_name'),
-                             student_name=row[0],
-                             admission_number=row[1],
-                             cat_1=row[2],
-                             cat_2=row[3],
-                             main_exam=row[4])
+
+                unit_code = request.form.get('unit_code')
+                unit_name = request.form.get('unit_name')
+                student_name = row[0]
+                admission_number = row[1]
+                cat_1 = float(row[2])
+                cat_2 = float(row[3])
+                main_exam = float(row[4])
+                total = ((cat_1 + cat_2) / 2) + main_exam
+
+                if total >= 70:
+                    grade = 'A'
+                elif total >= 60:
+                    grade = 'B'
+                elif total >= 50:
+                    grade = 'C'
+                elif total >= 40:
+                    grade = 'D'
+                else:
+                    grade = 'F'
+
+                marks = Unit(unit_code=unit_code,
+                             unit_name=unit_name,
+                             student_name=student_name,
+                             admission_number=admission_number,
+                             cat_1=cat_1,
+                             cat_2=cat_2,
+                             main_exam=main_exam,
+                             total=total,
+                             grade=grade
+                             )
                 db.session.add(marks)
                 db.session.commit()
-        flash('File has been submited successfully')
+        flash('File has been submitted successfully')
         return redirect(url_for('upload_csv'))
-    return render_template('upload3.html', form=form)
+    return render_template('upload.html', form=form)
 
 
 @app.route('/download')
@@ -181,7 +205,7 @@ def downloadfile():
     download csv template
     :return:
     """
-    path = 'D:\MyProjects\Student\pack\static\csv_template\example.csv'
+    path = "D:\MyProjects\Student\pack\static\csv_template\example.csv"
     return send_file(path, as_attachment=True)
 
 
@@ -193,10 +217,3 @@ def table():
     :return:
     """
     return render_template("table.html", title='Home', navbar_title='Dashboard')
-
-"""
-    full_name = StringField('Full Name', validators=[DataRequired()])
-    registration_number = StringField('Admission No.', validators=[DataRequired()])
-    phone_number = StringField('Phone Number', validators=[DataRequired()])
-    password = PasswordField(db.String(60), validators=[DataRequired(), EqualTo])
-    confirm_password"""

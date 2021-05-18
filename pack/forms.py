@@ -45,7 +45,7 @@ class UpdateProfileForm(FlaskForm):
     """
     full_name = StringField('Full Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    submit = SubmitField('Update Info')
+    submit = SubmitField('Update')
 
     def validate_full_name(self, full_name):
         """

@@ -1,29 +1,20 @@
 """
-utility functions
+utils
 """
+cat_1 = 25
+cat_2 = 10
+main_exam = 24
 
-data = [
-  {
-    "admission_number": "id400",
-    "cat_1": 58,
-    "cat_2": 22,
-    "main_exam": 5,
-    "student_name": "Student300",
-    "unit_code": "com5565",
-    "unit_name": "Al"
-  },
-  {
-    "admission_number": "id401",
-    "cat_1": 45,
-    "cat_2": 33,
-    "main_exam": 2,
-    "student_name": "Student301",
-    "unit_code": "com5565",
-    "unit_name": "Al"
-  }
-]
+total = ((cat_1 + cat_2) / 2) + main_exam
+if total >= 70:
+    grade = 'A'
+elif total >= 60:
+    grade = 'B'
+elif total >= 50:
+    grade = 'C'
+elif total >= 40:
+    grade = 'D'
+else:
+    grade = 'F'
 
-for title in data:
-    print(title['cat_1'])
-
-
+print(total, grade)

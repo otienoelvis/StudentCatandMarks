@@ -16,7 +16,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         {{ form.full_name.label(class="bmd-label-floating" ) }}
-                                        {{ form.full_name(class="form-control", type="text") }}
+                                        {{ form.full_name(class="form-control bg-transparent text-secondary", type="text") }}
                                     </div>
                                 </div>
                             </div>
@@ -24,7 +24,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         {{ form.email.label(class="bmd-label-floating" ) }}
-                                        {{ form.email(class="form-control", type="text") }}
+                                        {{ form.email(class="form-control bg-transparent text-secondary", type="email") }}
                                     </div>
                                 </div>
                             </div>
@@ -32,33 +32,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         {{ form.password.label(class="bmd-label-floating" ) }}
-
-                                        {% if form.password.errors %}
-                                            {{ form.password(class="form-control", type="password") }}
-                                            <div class="invalid-feedback">
-                                                {% for error in form.password.errors %}
-                                                    <span>{{ error }}</span>
-                                                {% endfor %}
-                                            </div>
-                                        {% else %}
-                                            {{ form.password(class="form-control", type="password") }}
-                                        {% endif %}
+                                        {{ form.password(class="form-control bg-transparent text-secondary", type="password") }}
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         {{ form.confirm_password.label(class="bmd-label-floating" ) }}
-
-                                        {% if form.confirm_password.errors %}
-                                            {{ form.confirm_password(class="form-control", type="password") }}
-                                            <div class="invalid-feedback">
-                                                {% for error in form.confirm_password.errors %}
-                                                    <span>{{ error }}</span>
-                                                {% endfor %}
-                                            </div>
-                                        {% else %}
-                                            {{ form.confirm_password(class="form-control", type="password") }}
-                                        {% endif %}
+                                        {{ form.confirm_password(class="form-control bg-transparent text-secondary", type="password") }}
                                     </div>
                                 </div>
                             </div>
