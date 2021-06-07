@@ -1,12 +1,11 @@
 """
 routes
 """
-from flask import render_template, jsonify, redirect, url_for, flash, redirect, request, abort, Blueprint, send_file
+from flask import render_template, jsonify, redirect, url_for, flash, request, send_file
 from pack import app, db, bcrypt
-from pack.forms import StudentForm, AdminForm, LoginForm, UpdateProfileForm, UploadCsvForm
+from pack.forms import AdminForm, LoginForm, UpdateProfileForm, UploadCsvForm, UploadForm
 from pack.models import Admin, Unit
 from flask_login import login_user, current_user, logout_user, login_required
-import json
 from io import TextIOWrapper
 import csv
 
@@ -100,7 +99,7 @@ def login():
 @app.route("/logout")
 def logout():
     """
-    logsout user
+    logout user
     :return:
     """
     logout_user()
@@ -144,7 +143,7 @@ def account():
     return render_template('profile.html', title='User Profile', navbar_title='My Profile', form=form)
 
 
-@app.route('/upload', methods=['GET', 'POST'])
+@app.route('/bulk_upload', methods=['GET', 'POST'])
 @login_required
 def upload_csv():
     """
@@ -196,6 +195,53 @@ def upload_csv():
         flash('File has been submitted successfully')
         return redirect(url_for('upload_csv'))
     return render_template('upload.html', form=form)
+
+
+@app.route("/single_upload", methods=['GET', 'POST'])
+@login_required
+def new_single_entry():
+    """
+    single file upload
+    :return:
+    """
+    form = UploadForm()
+    if form.validate_on_submit():
+        unit_code = form.unit_code.data
+        unit_name = form.unit_name.data
+        student_name = form.student_name.data
+        admission_number = form.admission_number.data
+        cat_1 = float(form.cat_1.data)
+        cat_2 = float(form.cat_2.data)
+        main_exam = float(form.main_exam.data)
+
+        total = ((cat_1 + cat_2) / 2) + main_exam
+
+        if total >= 70:
+            grade = 'A'
+        elif total >= 60:
+            grade = 'B'
+        elif total >= 50:
+            grade = 'C'
+        elif total >= 40:
+            grade = 'D'
+        else:
+            grade = 'F'
+
+        marks = Unit(unit_code=unit_code,
+                     unit_name=unit_name,
+                     student_name=student_name,
+                     admission_number=admission_number,
+                     cat_1=cat_1,
+                     cat_2=cat_2,
+                     main_exam=main_exam,
+                     total=total,
+                     grade=grade
+                     )
+        db.session.add(marks)
+        db.session.commit()
+        flash('Successfully submitted')
+        return redirect(url_for('home'))
+    return render_template('single_upload.html', form=form, title='Single Upload', navbar_title='Single Upload')
 
 
 @app.route('/download')

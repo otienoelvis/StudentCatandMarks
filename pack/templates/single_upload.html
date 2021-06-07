@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title">Login</h4>
+                        <p class="card-category">Fill in your info</p>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="">
+                            {{ form.hidden_tag() }}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ form.unit_code.label(class="bmd-label-floating text-white" ) }}
+                                        {{ form.unit_code(class="form-control bg-transparent text-white", type="text") }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {{ form.unit_name.label(class="bmd-label-floating text-white" ) }}
+                                        {{ form.unit_name(class="form-control bg-transparent text-white", type="text") }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mt-3">
+                                    <div class="form-group">
+                                        {{ form.student_name.label(class="bmd-label-floating text-white") }}
+                                        {{ form.student_name(class="form-control bg-transparent text-white", type="text") }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mt-3">
+                                    <div class="form-group">
+                                        {{ form.admission_number.label(class="bmd-label-floating text-white") }}
+                                        {{ form.admission_number(class="form-control bg-transparent text-white", type="text") }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mt-3">
+                                    <div class="form-group">
+                                        {{ form.cat_1.label(class="bmd-label-floating text-white") }}
+                                        {{ form.cat_1(class="form-control bg-transparent text-white", type="text") }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                    <div class="form-group">
+                                        {{ form.cat_2.label(class="bmd-label-floating text-white") }}
+                                        {{ form.cat_2(class="form-control bg-transparent text-white", type="text") }}
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mt-3">
+                                    <div class="form-group">
+                                        {{ form.main_exam.label(class="bmd-label-floating text-white") }}
+                                        {{ form.main_exam(class="form-control bg-transparent text-white", type="text") }}
+                                    </div>
+                                </div>
+                            </div>
+                            {{ form.submit(class="btn btn-primary") }}
+
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
