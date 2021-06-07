@@ -3,8 +3,8 @@ routes
 """
 from flask import render_template, jsonify, redirect, url_for, flash, request, send_file
 from pack import app, db, bcrypt
-from pack.forms import AdminForm, LoginForm, UpdateProfileForm, UploadCsvForm, UploadForm
-from pack.models import Admin, Unit
+from pack.forms import AdminForm, LoginForm, UpdateProfileForm, UploadCsvForm, UploadForm, StudentForm
+from pack.models import Admin, Unit, Student
 from flask_login import login_user, current_user, logout_user, login_required
 from io import TextIOWrapper
 import csv
@@ -72,6 +72,25 @@ def register():
         flash("Account Created successfully.")
         return redirect(url_for('login'))
     return render_template("register.html", form=form, title='Admin Signup')
+
+
+# noinspection PyUnresolvedReferences,PyArgumentList
+@app.route("/register_student", methods=['GET', 'POST'])
+@login_required
+def register_student():
+    """
+    registers student
+    :return:
+    """
+    form = StudentForm()
+    if form.validate_on_submit():
+        student = Student(student_name=form.full_name.data,admission_number=form.admission_number.data,
+                          email=form.email.data)
+        db.session.add(student)
+        db.session.commit()
+        flash("Student(s) added successfully.")
+        return redirect(url_for('register_student'))
+    return render_template("student_register.html", form=form, title='Add Student')
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -206,10 +225,6 @@ def new_single_entry():
     """
     form = UploadForm()
     if form.validate_on_submit():
-        unit_code = form.unit_code.data
-        unit_name = form.unit_name.data
-        student_name = form.student_name.data
-        admission_number = form.admission_number.data
         cat_1 = float(form.cat_1.data)
         cat_2 = float(form.cat_2.data)
         main_exam = float(form.main_exam.data)
@@ -227,15 +242,16 @@ def new_single_entry():
         else:
             grade = 'F'
 
-        marks = Unit(unit_code=unit_code,
-                     unit_name=unit_name,
-                     student_name=student_name,
-                     admission_number=admission_number,
+        marks = Unit(unit_code=form.unit_code.data,
+                     unit_name=form.unit_name.data,
+                     student_name=form.student_name.data,
+                     admission_number=form.admission_number.data,
                      cat_1=cat_1,
                      cat_2=cat_2,
                      main_exam=main_exam,
                      total=total,
-                     grade=grade
+                     grade=grade,
+                     student=Student.query.filter_by(admission_number=form.admission_number.data).first()
                      )
         db.session.add(marks)
         db.session.commit()
@@ -255,11 +271,10 @@ def downloadfile():
     return send_file(path, as_attachment=True)
 
 
-@app.route("/table", methods=['GET', 'POST'])
-@login_required
-def table():
-    """
-    renders home page
-    :return:
-    """
-    return render_template("table.html", title='Home', navbar_title='Dashboard')
+# noinspection PyUnresolvedReferences
+@app.route("/student/<string:admission_number>")
+def student_results(admission_number):
+    student = Student.query.filter_by(admission_number=admission_number).first()
+    units = Unit.query.filter_by(student=student).order_by(Unit.date_added.desc()).all()
+    name = student.student_name
+    return render_template("student.html", student=student, units=units, title=name, navbar_title='Transcript')

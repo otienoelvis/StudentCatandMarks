@@ -59,3 +59,49 @@ class Unit(db.Model):
     def __repr__(self):
         return f"Unit('{self.unit_code}', '{self.unit_name}', '{self.cat_1}', '{self.cat_2}', '{self.cat_3}', '{self.main_exam}')"
 
+
+@app.route("/single_upload", methods=['GET', 'POST'])
+@login_required
+def new_single_entry():
+    """
+    single file upload
+    :return:
+    """
+    form = UploadForm()
+    if form.validate_on_submit():
+        unit_code = form.unit_code.data
+        unit_name = form.unit_name.data
+        student_name = form.student_name.data
+        admission_number = form.admission_number.data
+        cat_1 = float(form.cat_1.data)
+        cat_2 = float(form.cat_2.data)
+        main_exam = float(form.main_exam.data)
+
+        total = ((cat_1 + cat_2) / 2) + main_exam
+
+        if total >= 70:
+            grade = 'A'
+        elif total >= 60:
+            grade = 'B'
+        elif total >= 50:
+            grade = 'C'
+        elif total >= 40:
+            grade = 'D'
+        else:
+            grade = 'F'
+
+        marks = Unit(unit_code=unit_code,
+                     unit_name=unit_name,
+                     student_name=student_name,
+                     admission_number=admission_number,
+                     cat_1=cat_1,
+                     cat_2=cat_2,
+                     main_exam=main_exam,
+                     total=total,
+                     grade=grade
+                     )
+        db.session.add(marks)
+        db.session.commit()
+        flash('Successfully submitted')
+        return redirect(url_for('home'))
+    return render_template('single_upload.html', form=form, title='Single Upload', navbar_title='Single Upload')

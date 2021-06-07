@@ -1,9 +1,28 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField,BooleanField, SubmitField, PasswordField, IntegerField, FileField
 from wtforms.validators import DataRequired, EqualTo, Email, ValidationError
-from pack.models import Admin
+from pack.models import Admin, Student
 from flask import flash
 from flask_login import current_user
+
+
+class StudentForm(FlaskForm):
+    full_name = StringField('Student Full Name', validators=[DataRequired()])
+    admission_number = StringField('Admission Number', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Submit')
+
+    def validate_email(self, email):
+        email = Student.query.filter_by(email=email.data).first()
+        if email:
+            flash('Another student has that email.\nContact Admin for help.')
+            raise ValidationError('That Email is taken.\nReset your password or use another email.')
+
+    def validate_admission_number(self, admission_number):
+        student = Student.query.filter_by(admission_number=admission_number.data).first()
+        if student:
+            flash('Another student has that admission number.\n Check your form or contact site admin for help.')
+            raise ValidationError('Another student has that admission number.\n Check your form or contact site admin for help.')
 
 
 class AdminForm(FlaskForm):
@@ -62,7 +81,6 @@ class UpdateProfileForm(FlaskForm):
 
 
 class UploadForm(FlaskForm):
-    unit_id = StringField('Unit ID', validators=[DataRequired()])
     unit_code = StringField('Unit Code', validators=[DataRequired()])
     unit_name = StringField('Unit Name', validators=[DataRequired()])
     student_name = StringField('Student Name', validators=[DataRequired()])
@@ -78,4 +96,6 @@ class UploadCsvForm(FlaskForm):
     unit_code = StringField('Unit Code', validators=[DataRequired()])
     unit_name = StringField('Unit Name', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
 

@@ -25,7 +25,7 @@
                     <td>{{ post.unit_code }}</td>
                     <td>{{ post.unit_name }}</td>
                     <td>{{ post.admission_number }}</td>
-                    <td>{{ post.student_name }}</td>
+                    <td><a href="{{ url_for('student_results', admission_number=post.student.admission_number) }}">{{ post.student.student_name }}</a></td>
                     <td>{{ post.cat_1 }}</td>
                     <td>{{ post.cat_2 }}</td>
                     <td>{{ post.main_exam }}</td>

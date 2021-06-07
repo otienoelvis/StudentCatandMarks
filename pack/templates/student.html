@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title">{{ student.student_name }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <table id="myTable" class="table table-hover table-striped mt32 customers-list">
+                            <thead>
+                            <tr>
+                                <th>Unit Code</th>
+                                <th>Unit Name</th>
+                                <th>Cat 1</th>
+                                <th>Cat 2</th>
+                                <th>Main Exam</th>
+                                <th>Total</th>
+                                <th>Grade</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for unit in units %}
+                                <tr>
+                                    <td>{{ unit.unit_code }}</td>
+                                    <td>{{ unit.unit_name }}</td>
+                                    <td>{{ unit.cat_1 }}</td>
+                                    <td>{{ unit.cat_2 }}</td>
+                                    <td>{{ unit.main_exam }}</td>
+                                    <td>{{ unit.total }}</td>
+                                    <td>{{ unit.grade }}</td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
