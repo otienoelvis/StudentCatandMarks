@@ -25,13 +25,29 @@
                     <td>{{ post.unit_code }}</td>
                     <td>{{ post.unit_name }}</td>
                     <td>{{ post.admission_number }}</td>
-                    <td><a href="{{ url_for('student_results', admission_number=post.student.admission_number) }}">{{ post.student.student_name }}</a></td>
+
+                    <td class="text-white" data-toggle="popover" title="{{ post.student.student_name }}"
+                        data-content="{{ post.student.admission_number }}">
+                        <a href="{{ url_for('student_results', admission_number=post.student.admission_number) }}">
+                            {{ post.student.student_name }}
+                        </a>
+                    </td>
+
                     <td>{{ post.cat_1 }}</td>
                     <td>{{ post.cat_2 }}</td>
                     <td>{{ post.main_exam }}</td>
                     <td>{{ post.total }}</td>
                     <td>{{ post.grade }}</td>
                 </tr>
+                <script>
+                    $(document).ready(function() {
+                        $('[data-toggle="popover"]').popover({
+                            placement: 'top',
+                            trigger: 'hover'
+                        });
+                    });
+
+                </script>
             {% endfor %}
 
             </tbody>

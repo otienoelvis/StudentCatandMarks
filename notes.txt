@@ -105,3 +105,20 @@ def new_single_entry():
         flash('Successfully submitted')
         return redirect(url_for('home'))
     return render_template('single_upload.html', form=form, title='Single Upload', navbar_title='Single Upload')
+
+
+<!--div class="row">
+                                <div class="col-md-6 mt-3">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Total</label>
+                                        <input id='a3' class="form-control bg-transparent text-white">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Grade</label>
+                                        <input id='ag' class="form-control bg-transparent text-white">
+                                    </div>
+                                </div>
+                                <a class="btn btn-primary" href="javascript:calculator()" role="button">Print Transcript</a>
+                            </div-->

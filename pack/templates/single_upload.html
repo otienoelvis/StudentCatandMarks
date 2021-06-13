@@ -5,8 +5,8 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title">Login</h4>
-                        <p class="card-category">Fill in your info</p>
+                        <h4 class="card-title">Submit Result</h4>
+                        <!--p class="card-category">Fill in your info</p-->
                     </div>
                     <div class="card-body">
                         <form method="POST" action="">
@@ -15,7 +15,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         {{ form.unit_code.label(class="bmd-label-floating text-white" ) }}
-                                        {{ form.unit_code(class="form-control bg-transparent text-white", type="text") }}
+                                        {{ form.unit_code(class="form-control bg-transparent text-white", type="text", id="fname", onblur="myFunction()") }}
                                     </div>
                                 </div>
                             </div>
@@ -23,7 +23,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         {{ form.unit_name.label(class="bmd-label-floating text-white" ) }}
-                                        {{ form.unit_name(class="form-control bg-transparent text-white", type="text") }}
+                                        {{ form.unit_name(class="form-control bg-transparent text-white", type="text", id="fname", onblur="myFunction()") }}
                                     </div>
                                 </div>
                             </div>
@@ -31,7 +31,7 @@
                                 <div class="col-md-6 mt-3">
                                     <div class="form-group">
                                         {{ form.student_name.label(class="bmd-label-floating text-white") }}
-                                        {{ form.student_name(class="form-control bg-transparent text-white", type="text") }}
+                                        {{ form.student_name(class="form-control bg-transparent text-white", type="text", id="fname", onblur="myFunction()") }}
                                     </div>
                                 </div>
                             </div>
@@ -47,13 +47,13 @@
                                 <div class="col-md-6 mt-3">
                                     <div class="form-group">
                                         {{ form.cat_1.label(class="bmd-label-floating text-white") }}
-                                        {{ form.cat_1(class="form-control bg-transparent text-white", min="0", type="number") }}
+                                        {{ form.cat_1(class="form-control bg-transparent text-white", id='c1', min="0", type="number") }}
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <div class="form-group">
                                         {{ form.cat_2.label(class="bmd-label-floating text-white") }}
-                                        {{ form.cat_2(class="form-control bg-transparent text-white", min="0", type="number") }}
+                                        {{ form.cat_2(class="form-control bg-transparent text-white", id='c2', min="0", type="number") }}
                                     </div>
                                 </div>
 
@@ -62,19 +62,26 @@
                                 <div class="col-md-6 mt-3">
                                     <div class="form-group">
                                         {{ form.main_exam.label(class="bmd-label-floating text-white") }}
-                                        {{ form.main_exam(class="form-control bg-transparent text-white", min="0", type="number") }}
+                                        {{ form.main_exam(class="form-control bg-transparent text-white",id='m1', min="0", type="number") }}
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6 mt-3">
                                     <div class="form-group">
-                                        <label class="bmd-label-floating" for="unit_code">Total</label>
-                                        <input class="form-control bg-transparent text-white" min="0" type="number">
-
+                                        <label class="bmd-label-floating">Total</label>
+                                        <input onclick="calculator()" id='a3' class="form-control bg-transparent text-white">
                                     </div>
                                 </div>
+                                <div class="col-md-6 mt-3">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">Grade</label>
+                                        <input onclick="calculator()" id='ag' class="form-control bg-transparent text-white">
+                                    </div>
+                                </div>
+                                <a class="btn btn-primary" href="javascript:calculator()" role="button">Print Transcript</a>
                             </div>
+
                             {{ form.submit(class="btn btn-primary") }}
 
                             <div class="clearfix"></div>

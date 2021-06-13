@@ -1,10 +1,14 @@
- function calculatea() {
+ function calculator() {
 
-        var c = document.getElementById('a1').value;
-        var d = document.getElementById('a2').value;
+        var c = document.getElementById('c1').value;
+        var d = document.getElementById('c2').value;
+        var b = document.getElementById('m1').value;
         c=parseInt(c);
         d=parseInt(d);
-        var e = c+d;
+        b=parseInt(b);
+
+
+        var e = ((c+d)/2) + b;
         document.getElementById('a3').value = e;
 
         var f = document.getElementById('a3').value

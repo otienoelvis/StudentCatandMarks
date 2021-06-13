@@ -1,13 +1,15 @@
 """
 routes
 """
-from flask import render_template, jsonify, redirect, url_for, flash, request, send_file
+from flask import render_template, jsonify, redirect, url_for, flash, request, send_file, session
 from pack import app, db, bcrypt
 from pack.forms import AdminForm, LoginForm, UpdateProfileForm, UploadCsvForm, UploadForm, StudentForm
 from pack.models import Admin, Unit, Student
 from flask_login import login_user, current_user, logout_user, login_required
 from io import TextIOWrapper
 import csv
+import datetime
+times = datetime.datetime.now().hour
 
 
 def serializer(field):
@@ -108,6 +110,13 @@ def login():
         if admin and bcrypt.check_password_hash(admin.password, form.password.data):
             login_user(admin, remember=form.remember.data)
             next_page = request.args.get('next')
+            name = session['admin_id']
+            if times < 12:
+                flash('Good morning. ' + name)
+            elif 12 <= times < 18:
+                flash('Good afternoon. ' + name)
+            else:
+                flash('Good evening. ' + name)
             flash('Login Success')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
@@ -143,7 +152,7 @@ def profile():
         form.full_name.data = current_user.full_name
         form.email.data = current_user.email
 
-    return render_template("profile.html", form=form, title='User Profile', navbar_title='My Profile')
+    return render_template("profile.html", form=form,current_user=current_user, title='User Profile', navbar_title='My Profile')
 
 
 @app.route("/account", methods=['GET', 'POST'])
@@ -207,7 +216,8 @@ def upload_csv():
                              cat_2=cat_2,
                              main_exam=main_exam,
                              total=total,
-                             grade=grade
+                             grade=grade,
+                             student=Student.query.filter_by(admission_number=form.admission_number.data).first()
                              )
                 db.session.add(marks)
                 db.session.commit()

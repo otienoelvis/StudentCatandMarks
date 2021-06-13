@@ -5,17 +5,26 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title">Update Profile</h4>
+                        <h4 class="card-title">{{ current_user.full_name }}</h4>
                     </div>
+                    <script>
+
+                    </script>
                     <div class="card-body">
                         <form method="POST" action="">
-                        {{ form.hidden_tag() }}
+                            {{ form.hidden_tag() }}
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         {{ form.full_name.label(class="bmd-label-floating" ) }}
-                                        {{ form.full_name(class="form-control bg-transparent text-secondary", type="text") }}
+                                        {{ form.full_name(class="form-control bg-transparent text-secondary", type="text", id="fname", onkeyup="myFunction()") }}
                                     </div>
+                                    <script>
+                                        function myFunction() {
+                                            var x = document.getElementById("fname");
+                                            x.value = x.value.toUpperCase();
+                                        }
+                                    </script>
                                 </div>
                             </div>
                             <div class="row">
