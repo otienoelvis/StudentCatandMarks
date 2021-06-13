@@ -28,15 +28,40 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        {{ form.year_of_study.label(class="bmd-label-floating text-white" ) }}
+                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="mySelect" onchange="myFunction()">
+                                            <option value="1.1">1.1</option>
+                                            <option value="1.2">1.2</option>
+                                            <option value="2.1">2.1</option>
+                                            <option value="2.2">2.2</option>
+                                            <option value="3.1">3.1</option>
+                                            <option value="3.2">3.2</option>
+                                            <option value="4.1">4.1</option>
+                                            <option value="4.2">4.2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+
+                                        {{ form.year_of_study(class="form-control bg-transparent", id="demo") }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         {{ form.email.label(class="bmd-label-floating text-white" ) }}
                                         {{ form.email(class="form-control bg-transparent text-white", type="email") }}
                                     </div>
                                 </div>
                             </div>
 
+
                             <!--button type="submit" >Update Profile</button-->
                             {{ form.submit(class="btn btn-primary ") }}
                             <div class="clearfix"></div>
+
                         </form>
                     </div>
                 </div>

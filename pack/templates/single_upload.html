@@ -15,7 +15,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         {{ form.unit_code.label(class="bmd-label-floating text-white" ) }}
-                                        {{ form.unit_code(class="form-control bg-transparent text-white", type="text", id="fname", onblur="myFunction()") }}
+                                        {{ form.unit_code(class="form-control bg-transparent text-white", type="text", id="ucode", onblur="code_uppercase()") }}
+                                        <script>
+                                            function code_uppercase() {
+                                                var x = document.getElementById("ucode");
+                                                x.value = x.value.toUpperCase();
+                                            }
+                                        </script>
                                     </div>
                                 </div>
                             </div>
@@ -23,7 +29,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         {{ form.unit_name.label(class="bmd-label-floating text-white" ) }}
-                                        {{ form.unit_name(class="form-control bg-transparent text-white", type="text", id="fname", onblur="myFunction()") }}
+                                        {{ form.unit_name(class="form-control bg-transparent text-white", type="text", id="uname", onblur="name_uppercase()") }}
+                                        <script>
+                                            function name_uppercase() {
+                                                var x = document.getElementById("uname");
+                                                x.value = x.value.toUpperCase();
+                                            }
+                                        </script>
                                     </div>
                                 </div>
                             </div>
@@ -32,6 +44,12 @@
                                     <div class="form-group">
                                         {{ form.student_name.label(class="bmd-label-floating text-white") }}
                                         {{ form.student_name(class="form-control bg-transparent text-white", type="text", id="fname", onblur="myFunction()") }}
+                                        <script>
+                                            function myFunction() {
+                                                var x = document.getElementById("fname");
+                                                x.value = x.value.toUpperCase();
+                                            }
+                                        </script>
                                     </div>
                                 </div>
                             </div>
@@ -47,13 +65,13 @@
                                 <div class="col-md-6 mt-3">
                                     <div class="form-group">
                                         {{ form.cat_1.label(class="bmd-label-floating text-white") }}
-                                        {{ form.cat_1(class="form-control bg-transparent text-white", id='c1', min="0", type="number") }}
+                                        {{ form.cat_1(class="form-control bg-transparent text-white", id='c1', min="0", max="30", type="number") }}
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <div class="form-group">
                                         {{ form.cat_2.label(class="bmd-label-floating text-white") }}
-                                        {{ form.cat_2(class="form-control bg-transparent text-white", id='c2', min="0", type="number") }}
+                                        {{ form.cat_2(class="form-control bg-transparent text-white", id='c2', min="0", max="30", type="number") }}
                                     </div>
                                 </div>
 
@@ -62,7 +80,7 @@
                                 <div class="col-md-6 mt-3">
                                     <div class="form-group">
                                         {{ form.main_exam.label(class="bmd-label-floating text-white") }}
-                                        {{ form.main_exam(class="form-control bg-transparent text-white",id='m1', min="0", type="number") }}
+                                        {{ form.main_exam(class="form-control bg-transparent text-white",id='m1', min="0", max="70", type="number") }}
                                     </div>
                                 </div>
                             </div>
@@ -79,7 +97,10 @@
                                         <input onclick="calculator()" id='ag' class="form-control bg-transparent text-white">
                                     </div>
                                 </div>
-                                <a class="btn btn-primary" href="javascript:calculator()" role="button">Print Transcript</a>
+                            </div>
+                            <div>
+                                <a class="btn btn-primary pull-right" href="javascript:calculator()" role="button">Calculate</a>
+
                             </div>
 
                             {{ form.submit(class="btn btn-primary") }}

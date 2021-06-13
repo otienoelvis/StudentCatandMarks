@@ -86,8 +86,8 @@ def register_student():
     """
     form = StudentForm()
     if form.validate_on_submit():
-        student = Student(student_name=form.full_name.data,admission_number=form.admission_number.data,
-                          email=form.email.data)
+        student = Student(student_name=form.full_name.data, admission_number=form.admission_number.data,
+                          year_of_study=form.year_of_study.data, email=form.email.data)
         db.session.add(student)
         db.session.commit()
         flash("Student(s) added successfully.")
@@ -110,13 +110,13 @@ def login():
         if admin and bcrypt.check_password_hash(admin.password, form.password.data):
             login_user(admin, remember=form.remember.data)
             next_page = request.args.get('next')
-            name = session['admin_id']
+            name = current_user.full_name
             if times < 12:
-                flash('Good morning. ' + name)
+                flash('Good morning ' + name)
             elif 12 <= times < 18:
-                flash('Good afternoon. ' + name)
+                flash('Good afternoon ' + name)
             else:
-                flash('Good evening. ' + name)
+                flash('Good evening ' + name)
             flash('Login Success')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
@@ -288,3 +288,15 @@ def student_results(admission_number):
     units = Unit.query.filter_by(student=student).order_by(Unit.date_added.desc()).all()
     name = student.student_name
     return render_template("student.html", student=student, units=units, title=name, navbar_title='Transcript')
+
+
+# noinspection PyUnresolvedReferences
+@app.route("/rollover", methods=['GET', 'POST'])
+@login_required
+def rollover():
+    """
+    renders rollover
+    :return:
+    """
+
+    return render_template("rollover.html")

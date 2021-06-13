@@ -65,7 +65,7 @@
                     <li class="nav-item ">
                         <a class="nav-link" href="{{ url_for('home') }}">
                             <i class="material-icons">groups</i>
-                            <p>Results</p>
+                            <p>Students</p>
                         </a>
                     </li>
                     <li class="nav-item ">
@@ -87,9 +87,9 @@
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="#">
-                            <i class="material-icons">location_ons</i>
-                            <p>Maps</p>
+                        <a class="nav-link" href="{{ url_for('rollover') }}">
+                            <i class="material-icons">task</i>
+                            <p>Rollover</p>
                         </a>
                     </li>
                     <li class="nav-item ">
@@ -113,7 +113,9 @@
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
-                    <a class="navbar-brand">{{ navbar_title }}</a>
+                    <marquee behavior="scroll" direction="up" scrollamount="3">
+                        <a class="navbar-brand">{{ navbar_title }}</a>
+                    </marquee>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
                     <span class="sr-only">Toggle navigation</span>
@@ -247,9 +249,9 @@
 <!-- Calculate Total and Grade -->
 <script lang="javascript" type="text/javascript" src="/static/total_grade_calculator.js"></script>
 <!-- onblur -->
-<script lang="javascript" type="text/javascript" src="/static/onblur.js"></script>
-<!-- name filler -->
-<!--script lang="javascript" type="text/javascript" src="/static/filler.js"></script-->
+<!--script lang="javascript" type="text/javascript" src="/static/onblur.js"></script-->
+<!-- onchange -->
+<script lang="javascript" type="text/javascript" src="/static/onchange.js"></script>
 <script>
     $(document).ready(function() {
         $().ready(function() {

@@ -29,6 +29,7 @@ class Student(db.Model):
     student_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     admission_number = db.Column(db.String, unique=True, nullable=False)
+    year_of_study = db.Column(db.String, nullable=False)
     units = db.relationship('Unit', backref='student', lazy=True)
 
     def __repr__(self):

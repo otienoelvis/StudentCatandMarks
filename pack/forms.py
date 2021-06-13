@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,BooleanField, SubmitField, PasswordField, IntegerField, FileField
+from wtforms import StringField,BooleanField, SubmitField, PasswordField, IntegerField, FileField, SelectField
 from wtforms.validators import DataRequired, EqualTo, Email, ValidationError
 from pack.models import Admin, Student
 from flask import flash
@@ -10,6 +10,8 @@ class StudentForm(FlaskForm):
     full_name = StringField('Student Full Name', validators=[DataRequired()])
     admission_number = StringField('Admission Number', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
+    year_of_study = StringField('Year Of Study', validators=[DataRequired()])
+    #     year_of_study = SelectField('Year Of Study', choices=[1.1,1.2,2.1,2.2,3.1,3.2,4.1,4.2], validators=[DataRequired()])
     submit = SubmitField('Submit')
 
     def validate_email(self, email):
