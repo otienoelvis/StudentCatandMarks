@@ -47,13 +47,13 @@
                                 <div class="col-md-6 mt-3">
                                     <div class="form-group">
                                         {{ form.cat_1.label(class="bmd-label-floating text-white") }}
-                                        {{ form.cat_1(class="form-control bg-transparent text-white", type="text") }}
+                                        {{ form.cat_1(class="form-control bg-transparent text-white", min="0", type="number") }}
                                     </div>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <div class="form-group">
                                         {{ form.cat_2.label(class="bmd-label-floating text-white") }}
-                                        {{ form.cat_2(class="form-control bg-transparent text-white", type="text") }}
+                                        {{ form.cat_2(class="form-control bg-transparent text-white", min="0", type="number") }}
                                     </div>
                                 </div>
 
@@ -62,7 +62,16 @@
                                 <div class="col-md-6 mt-3">
                                     <div class="form-group">
                                         {{ form.main_exam.label(class="bmd-label-floating text-white") }}
-                                        {{ form.main_exam(class="form-control bg-transparent text-white", type="text") }}
+                                        {{ form.main_exam(class="form-control bg-transparent text-white", min="0", type="number") }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating" for="unit_code">Total</label>
+                                        <input class="form-control bg-transparent text-white" min="0" type="number">
+
                                     </div>
                                 </div>
                             </div>

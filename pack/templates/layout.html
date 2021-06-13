@@ -63,6 +63,12 @@
                         </a>
                     </li>
                     <li class="nav-item ">
+                        <a class="nav-link" href="{{ url_for('home') }}">
+                            <i class="material-icons">groups</i>
+                            <p>Results</p>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
                         <a class="nav-link" href="{{ url_for('upload_csv') }}">
                             <i class="material-icons">cloud_upload</i>
                             <p>Bulk Results Upload</p>
@@ -236,6 +242,8 @@
 <script src="/static/js/material-dashboard.js?v=2.1.0"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="/static/demo/demo.js"></script>
+<!-- Print Transcript -->
+<script lang="javascript" type="text/javascript" src="/static/print_transcript.js"></script>
 <script>
     $(document).ready(function() {
         $().ready(function() {
