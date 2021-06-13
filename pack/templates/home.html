@@ -27,7 +27,7 @@
                     <td>{{ post.admission_number }}</td>
 
                     <td class="text-white" data-toggle="popover" title="{{ post.student.student_name }}"
-                        data-content="<{{ post.student.admission_number }}">
+                        data-content="{{ post.student.admission_number }}">
                         <a href="{{ url_for('student_results', admission_number=post.student.admission_number) }}">
                             {{ post.student.student_name }}
                         </a>
