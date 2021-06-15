@@ -7,6 +7,7 @@
                     <div class="card-header card-header-primary">
                         <h4 class="card-title">{{ student.student_name }}</h4>
                         <h6 class="card-title">Admission Number: {{ student.admission_number }}</h6>
+                        <a class="pull-right" href="javascript:print_transcript()"><i class="material-icons">print</i></a>
                     </div>
                     <div class="card-body">
                         <table id="myTable" class="table table-hover table-striped mt32 customers-list">
@@ -39,7 +40,8 @@
                         </table>
                     </div>
                 </div>
-                <a class="btn btn-primary" href="javascript:print()" role="button">Print Transcript</a>
+                <!--a class="btn btn-primary" href="javascript:print_transcript()" role="button">Print Transcript</a-->
+
             </div>
         </div>
     </div>

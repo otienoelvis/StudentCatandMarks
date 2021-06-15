@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField,BooleanField, SubmitField, PasswordField, IntegerField, FileField, SelectField
-from wtforms.validators import DataRequired, EqualTo, Email, ValidationError
+from wtforms.validators import DataRequired, EqualTo, Email, ValidationError, NumberRange
 from pack.models import Admin, Student
 from flask import flash
 from flask_login import current_user
@@ -87,9 +87,9 @@ class UploadForm(FlaskForm):
     unit_name = StringField('Unit Name', validators=[DataRequired()])
     student_name = StringField('Student Name', validators=[DataRequired()])
     admission_number = StringField('Student Adm', validators=[DataRequired()])
-    cat_1 = IntegerField('Cat 1', validators=[DataRequired()])
-    cat_2 = IntegerField('Cat 2', validators=[DataRequired()])
-    main_exam = IntegerField('Main Exam', validators=[DataRequired()])
+    cat_1 = IntegerField('Cat 1', validators=[DataRequired(), NumberRange(min=0, max=30, message="Enter a number from 0 to 30")])
+    cat_2 = IntegerField('Cat 2', validators=[DataRequired(), NumberRange(min=0, max=30, message="Enter a number from 0 to 30")])
+    main_exam = IntegerField('Main Exam', validators=[DataRequired(), NumberRange(min=0, max=30, message="Enter a number from 0 to 70")])
     submit = SubmitField('Submit')
 
 
